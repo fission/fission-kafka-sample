@@ -1,0 +1,51 @@
+include:
+- target/iot-kafka-producer-1-0-0.jar
+kind: ArchiveUploadSpec
+name: iot-kafka-producer-1-0-0.jar
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: iot-kafka-producer-1-0-0.jar-rrvv
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+    type: url
+    url: archive://iot-kafka-producer-1-0-0.jar
+  environment:
+    name: java
+    namespace: default
+  source:
+    checksum: {}
+status:
+  buildstatus: none
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: kp
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 1
+      MinScale: 0
+      TargetCPUPercent: 80
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: java
+    namespace: default
+  package:
+    functionName: io.fission.kafka.IotProducer
+    packageref:
+      name: iot-kafka-producer-1-0-0.jar-rrvv
+      namespace: default
+  resources: {}
+  secrets: null
