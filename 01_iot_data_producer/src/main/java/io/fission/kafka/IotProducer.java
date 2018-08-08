@@ -5,16 +5,18 @@ import io.fission.Function;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 import org.springframework.http.HttpStatus;
@@ -28,10 +30,11 @@ import io.fission.Context;
 public class IotProducer implements Function {
 
 	private static Logger logger = Logger.getGlobal();
+	static final long FIVE_MINUTE_IN_MILLIS=300000;//millisecs
+
 	
 	public ResponseEntity call(RequestEntity req, Context context) {
 		
-		String zookeeper =  System.getenv("ZOOKEEPER_ADDR");
 		String brokerList = System.getenv("KAFKA_ADDR");
 		String topic = System.getenv("TOPIC_NAME");
 		if (brokerList == null || topic == null) {
@@ -76,11 +79,17 @@ public class IotProducer implements Function {
 		logger.info("Sending events");
 		// generate event in loop
 		List<IoTData> eventList = new ArrayList<IoTData>();
-		for (int i = 0; i < 1000; i++) {// create 1000 vehicles and push to Kafka on every function invocation
+		for (int i = 0; i < 10; i++) {// create 1000 vehicles and push to Kafka on every function invocation
 			String vehicleId = UUID.randomUUID().toString();
 			String vehicleType = vehicleTypeList.get(rand.nextInt(5));
 			String routeId = routeList.get(rand.nextInt(3));
-			Date timestamp = new Date();
+			
+
+			Calendar d1 = Calendar.getInstance();
+			long t = d1.getTimeInMillis();
+			Date d2 = new Date(t + (FIVE_MINUTE_IN_MILLIS));
+			Date timestamp =  new Date(ThreadLocalRandom.current().nextLong(t, d2.getTime()));
+			
 			double speed = rand.nextInt(100 - 20) + 20;// random speed between 20 to 100
 			double fuelLevel = rand.nextInt(40 - 10) + 10;
 			for (int j = 0; j < 5; j++) {// Add 5 events for each vehicle
