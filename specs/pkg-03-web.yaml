@@ -17,4 +17,4 @@ status:
 kind: ArchiveUploadSpec
 name: web-pkg-zip
 include:
-  - "*"
+  - "03_iot_web/*"

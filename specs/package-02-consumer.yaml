@@ -1,5 +1,5 @@
 include:
-- target/iot-kafka-consumer-1.0.0-jar-with-dependencies.jar
+- 02_iot_data_consumer/target/iot-kafka-consumer-1.0.0-jar-with-dependencies.jar
 kind: ArchiveUploadSpec
 name: iot-kafka-consumer-1-0-0-jar-with-dependencies-jar
 

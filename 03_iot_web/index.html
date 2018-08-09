@@ -92,6 +92,14 @@
 
             <div class="row">
                 <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i>
+                        Trigger Sensor data generation</div>
+                    <div class="card-body">
+                        <a class="btn btn-primary btn-block" onclick="produceData()">Generate Data</a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
                     <div class="card text-white bg-light o-hidden h-100">
                         <div class="card-body">
                             <div class="card-body-icon">
@@ -137,7 +145,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-area"></i>
-                    Speed variation on Route 43</div>
+                    Speed variation across routes</div>
                 <div class="card-body">
                     <canvas id="dataChart" width="100%" height="25"></canvas>
                 </div>
@@ -172,6 +180,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
     <script type="text/javascript">
+        function produceData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert("Data generation triggered")
+                }
+            };
+            xhttp.open("GET", "/fission-function/kp", true);
+            xhttp.send();
+        }
+        function flushData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert("Data cleared")
+                }
+            };
+            xhttp.open("GET", "/fission-function/flush", true);
+            xhttp.send();
+        }
         // Load the speed avg
         $.ajax({
             type: 'get',
@@ -291,7 +319,7 @@
             error: function (err) { console.log(err); }
         });
 
-        // Finally data Chart for all 3 routes
+        // Finally data Chart for one route
         $.ajax({
             type: 'get',
             url: '/fission-function/data',
@@ -305,8 +333,20 @@
                         datasets: [
                             {
                                 label: "Route 43",
-                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                backgroundColor: ["#3e95cd"],
                                 data: Object.values(response["ROUTE-43-DATA"]),
+                                fill: false
+                            },
+                            {
+                                label: "Route 82",
+                                backgroundColor: ["#8e5ea2"],
+                                data: Object.values(response["ROUTE-82-DATA"]),
+                                fill: false
+                            },
+                            {
+                                label: "Route 37",
+                                backgroundColor: ["#c45850"],
+                                data: Object.values(response["ROUTE-37-DATA"]),
                                 fill: false
                             }
                         ]

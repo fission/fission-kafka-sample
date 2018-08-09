@@ -3,5 +3,5 @@
 # Do not edit the UID below: that will break 'fission spec apply'
 apiVersion: fission.io/v1
 kind: DeploymentConfig
-name: iot-web
-uid: 7c4e58ca-161a-41fe-9d49-b3c93087e8c7
+name: sample-project-2
+uid: d472e532-0a32-4f03-bf60-5b380a5d7ac8

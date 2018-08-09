@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,13 @@ public class IotProducer implements Function {
 			logger.severe("Failed to send events to Kafka"+ e);
 		}
 		producer.close();
-		return ResponseEntity.status(HttpStatus.OK).build();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Access-Control-Allow-Origin", "*");
+		headers.add("Access-Control-Allow-Headers", "*");
+		headers.add("Access-Control-Allow-Credentials", "true");
+		headers.add("Access-Control-Allow-Methods", "*");
+		headers.add("Access-Control-Expose-Headers", "*");
+		return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
 	}
 
 	/**
