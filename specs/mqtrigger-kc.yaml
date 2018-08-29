@@ -1,0 +1,15 @@
+apiVersion: fission.io/v1
+kind: MessageQueueTrigger
+metadata:
+  creationTimestamp: null
+  name: kc
+  namespace: default
+spec:
+  contentType: application/json
+  errorTopic: iotdataerr
+  functionref:
+    name: kc
+    type: name
+  maxRetries: 0
+  messageQueueType: kafka
+  topic: iotdata
