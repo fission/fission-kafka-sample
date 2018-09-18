@@ -1,12 +1,12 @@
-# Fission Kafka - IOT Demo
+# Fission Kafka - IoT Demo
 
 This sample project is inspired from [Yugabyte's IOT fleet management demo](https://github.com/YugaByte/yb-iot-fleet-management). The original example was built using  microservice, this demo will transform that into an example which uses Fission functions.
 
 ## Functions
 
-1. IOT Data Producer: The first function generates data about a fleet of vehicles and their lattitude, longitude, speed, fuel level etc. This function is trigerred every N seconds resembling a sensor sending the data. This function sends this data to the a Kafka topic.
+1. IoT Data Producer: The first function generates data about a fleet of vehicles and their lattitude, longitude, speed, fuel level etc. This function is trigerred every N seconds resembling a sensor sending the data. This function sends this data to the a Kafka topic.
 
-2. IOT Data Consumer: Second function retrieves data from Kafka topics, runs some transformations and persists into Redis. This function is trigerred for every message in the Kafka topic.
+2. IoT Data Consumer: Second function retrieves data from Kafka topics, runs some transformations and persists into Redis. This function is trigerred for every message in the Kafka topic.
 
 There are 4 more functions which read the data stored in Redis and expose them at REST endpoints. 
 
