@@ -1,6 +1,7 @@
 Table of Contents
 =================
 
+   * [Table of Contents](#table-of-contents)
    * [Fission Kafka - IoT Demo](#fission-kafka---iot-demo)
       * [Architecture](#architecture)
          * [Functions](#functions)
@@ -9,8 +10,10 @@ Table of Contents
          * [Prerequisite](#prerequisite)
          * [Setup Kafka](#setup-kafka)
          * [Setup Redis](#setup-redis)
-   * [Creating trigger to produce data every 5 minutes](#creating-trigger-to-produce-data-every-5-minutes)
-   * [Calling the producer function directly.](#calling-the-producer-function-directly)
+         * [Configuration Check/Change](#configuration-checkchange)
+         * [Build Functions](#build-functions)
+         * [Deploy functions](#deploy-functions)
+         * [Testing](#testing)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -75,7 +78,8 @@ $ helm install redis-single --namespace redis \
   --set cluster.enabled=false \
   --set master.persistence.enabled=false \
     bitnami/redis
-    ```
+```
+
 
 ### Configuration Check/Change
 
@@ -89,23 +93,30 @@ Some key configuration need to be checked for having proper values:
 JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
 ```
 
+
 ### Build Functions
 
 The two java functions need to be built locally from directories `01_iot_data_producer` and `02_iot_data_consumer`. Without installing JDK locally, we will build them inside a docker container with following command:
 
 ```
  $ docker run -it --rm --name my-men-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn clean install
- ```
+```
+
 
 ### Deploy functions
 
 - All the environment, package and function definitions are in specs directory. To create all of them run command:
 
-```$ fission spec apply ```
+```
+$ fission spec apply 
+```
 
 - You can check details of deployed functions:
 
-```$ fission fn list ```
+```
+$ fission fn list 
+```
+
 
 ### Testing
 
