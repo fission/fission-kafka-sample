@@ -21,7 +21,7 @@ public class IotApiVehicles implements Function  {
 	
 	private static Logger logger = Logger.getGlobal();
 	final ObjectMapper mapper = new ObjectMapper();
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-redis.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
 
 	public ResponseEntity call(RequestEntity req, Context context) {
 		Jedis jedis = null;

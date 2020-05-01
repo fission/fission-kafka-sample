@@ -21,7 +21,7 @@ public class IotApiFuel implements Function  {
 	
 	private static Logger logger = Logger.getGlobal();
 	final ObjectMapper mapper = new ObjectMapper();
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-redis.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
 
 	public ResponseEntity call(RequestEntity req, Context context) {
 		Jedis jedis = null;
@@ -56,7 +56,7 @@ public class IotApiFuel implements Function  {
 	
 	public static Integer calculateAverage(List<String> data) {
 		int sum = 0;
-		int num = 0;
+		int num = 1;
 		for (int i = 0;i<data.size(); i++) {
 			String item = data.get(i);
 			sum = sum + Math.round(Float.parseFloat(item));

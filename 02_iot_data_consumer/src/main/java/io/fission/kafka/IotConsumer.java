@@ -19,7 +19,7 @@ public class IotConsumer implements Function {
 
 	private static Logger logger = Logger.getGlobal();
 
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-redis.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
 	final ObjectMapper mapper = new ObjectMapper();
 
 	public ResponseEntity call(RequestEntity req, Context context) {
