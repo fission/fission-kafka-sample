@@ -8,17 +8,17 @@ spec:
   TerminationGracePeriod: 360
   builder:
     command: build
-    image: fission/jvm-builder:0.9.2
+    image: fission/jvm-builder
   keeparchive: true
   poolsize: 3
   resources: {}
   runtime:
     functionendpointport: 0
-    image: fission/jvm-env:0.9.2
+    image: fission/jvm-env
     container:
       env:
         - name: KAFKA_ADDR 
-          value: "kafka-0.broker.kafka.svc.cluster.local:9092,kafka-1.broker.kafka.svc.cluster.local:9092,kafka-2.broker.kafka.svc.cluster.local:9092"
+          value: "my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092,"
         - name: TOPIC_NAME 
           value: iotdata
     loadendpointpath: ""

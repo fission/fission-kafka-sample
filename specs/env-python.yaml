@@ -8,13 +8,13 @@ spec:
   TerminationGracePeriod: 5
   builder:
     command: build
-    image: fission/python-builder:0.9.2
+    image: fission/python-builder
   keeparchive: false
   poolsize: 3
   resources: {}
   runtime:
     functionendpointport: 0
-    image: fission/python-env:0.9.2
+    image: fission/python-env
     loadendpointpath: ""
     loadendpointport: 0
   version: 2
