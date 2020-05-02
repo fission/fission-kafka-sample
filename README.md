@@ -50,6 +50,7 @@ The resulting dashboard shows various trends. It also provides a way to invoke t
 ### Prerequisite
 
 - A Kubernetes cluster with latest version of Fission
+- Fission installation should have Kafka MQT installed with address of Kafka brokers.
 - Docker and Fission-CLI on local machine
 
 ### Setup Kafka
@@ -92,6 +93,19 @@ Some key configuration need to be checked for having proper values:
 ```
 JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
 ```
+
+- You will also need to update the Fission installation if not already to enable the Kafka MQT trigger with appropriate configuration of broker address etc.
+
+```
+## Kafka: enable and configure the details
+kafka:
+  enabled: true
+  # note: below link is only for reference. 
+  # Please use the brokers link for your kafka here. 
+  brokers: 'my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092' # or your-bootstrap-server.kafka:9092/9093
+  authentication:
+```
+
 
 
 ### Build Functions

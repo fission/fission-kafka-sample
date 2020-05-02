@@ -86,7 +86,7 @@ public class IotProducer implements Function {
 		logger.info("Sending events");
 		// generate event in loop
 		List<IoTData> eventList = new ArrayList<IoTData>();
-		for (int i = 0; i < 10; i++) {// create 1000 vehicles and push to Kafka on every function invocation
+		for (int i = 0; i < 50; i++) {// create 1000 vehicles and push to Kafka on every function invocation
 			String vehicleId = UUID.randomUUID().toString();
 			String vehicleType = vehicleTypeList.get(rand.nextInt(5));
 			String routeId = routeList.get(rand.nextInt(3));
