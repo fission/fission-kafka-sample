@@ -23,6 +23,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import io.fission.kafka.IoTData;
 
@@ -108,9 +111,19 @@ public class IotProducer implements Function {
 				eventList.add(event);
 			}
 		}
+		JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+		Jedis jedis = null;
 		Collections.shuffle(eventList);// shuffle for random events
-		for (IoTData event : eventList) {
-			producer.send(new ProducerRecord<String, IoTData>(topic, event));
+		try {
+			jedis = pool.getResource();
+			for (IoTData event : eventList) {
+				producer.send(new ProducerRecord<String, IoTData>(topic, event));
+				jedis.hincrBy("RECORD_SENT_BY_PRODUCER", "COUNT", 1);	
+			}
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
 		}
 
 	}

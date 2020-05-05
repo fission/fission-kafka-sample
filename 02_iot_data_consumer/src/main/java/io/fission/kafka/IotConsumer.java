@@ -37,6 +37,7 @@ public class IotConsumer implements Function {
 			jedis.ltrim((iotData.getRouteId()+"-SPEED").toUpperCase(), 0, 10000);
 			// - Add Increment Vehicle type by 1
 			jedis.hincrBy((iotData.getVehicleType().replace(" ", "-")).toUpperCase(), "COUNT", 1);	
+			jedis.hincrBy("RECORD_ACK_BY_CONSUMER", "COUNT", 1);
 		
 			// - Add Data of Speed across times.
 			jedis.hset((iotData.getRouteId()+"-DATA").toUpperCase(), iotData.getTimestamp().toString(), Double.toString(iotData.getSpeed()));			
