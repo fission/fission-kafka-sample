@@ -94,9 +94,12 @@
                 <div class="col-xl-3 col-sm-6 mb-3">
                     <div class="card-header">
                         <i class="fas fa-chart-area"></i>
-                        Trigger Sensor data generation</div>
+                        Trigger Sensor data operations</div>
                     <div class="card-body">
                         <a class="btn btn-primary btn-block" onclick="produceData()">Generate Data</a>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-primary btn-block" onclick="flushData()">Flush Redis Data</a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-3">
@@ -105,7 +108,20 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-comments"></i>
                             </div>
-                            <div class="mr-5">Average fuel</div>
+                            <div class="mr-5">IOT Stats</div>
+                            <div>
+                                <canvas id="statsAvg" width="100%" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-light o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-comments"></i>
+                            </div>
+                            <div class="mr-5">Average Speed</div>
                             <div>
                                 <canvas id="fuelaverage" width="100%" height="100"></canvas>
                             </div>
@@ -118,20 +134,7 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-comments"></i>
                             </div>
-                            <div class="mr-5">Average Speed</div>
-                            <div>
-                                <canvas id="speedaverage" width="100%" height="100"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-light o-hidden h-100">
-                        <div class="card-body">
-                            <div class="card-body-icon">
-                                <i class="fas fa-fw fa-comments"></i>
-                            </div>
-                            <div class="mr-5">Average Speed</div>
+                            <div class="mr-5">Vehicle Distribution</div>
                             <div>
                                 <canvas id="countdistribution" width="100%" height="100"></canvas>
                             </div>
@@ -197,13 +200,13 @@
                     alert("Data cleared")
                 }
             };
-            xhttp.open("GET", "/fission-function/flush", true);
+            xhttp.open("GET", "/fission-function/flushcachedata", true);
             xhttp.send();
         }
-        // Load the speed avg
+        // Load the IOT stats
         $.ajax({
             type: 'get',
-            url: '/fission-function/speedavg',
+            url: '/fission-function/iotstats',
             crossDomain: true,
             origin: "*",
             data: {},
@@ -214,13 +217,13 @@
                 //   api_data[i] //value
                 //}
                 console.log(response);
-                new Chart(document.getElementById("speedaverage"), {
+                new Chart(document.getElementById("statsAvg"), {
                     type: 'bar',
                     data: {
                         labels: Object.keys(response),
                         datasets: [
                             {
-                                label: "Fuel Consumption",
+                                label: "Total Messages Sent and Processed",
                                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                                 data: Object.values(response)
                             }
@@ -230,7 +233,7 @@
                         legend: { display: true },
                         title: {
                             display: true,
-                            text: 'Average fuel consumption across routes'
+                            text: 'Total Stats'
                         },
                         scales: {
                             yAxes: [{
