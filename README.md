@@ -71,6 +71,7 @@ $ kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-persistent-sin
 We will setup redis without persistence and as a single instance (i.e. no master & slave). You can customize the command as per your needs based on [instrcutions from here](https://github.com/helm/charts/tree/master/stable/redis#configuration). Also note that for simplicity - Redis has been setup without a password.
 
 ```
+$ kubectl create namespace redis
 
 $ helm repo add bitnami https://charts.bitnami.com/bitnami
 
