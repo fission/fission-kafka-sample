@@ -11,9 +11,9 @@ Table of Contents
          * [Setup Kafka](#setup-kafka)
          * [Setup Redis](#setup-redis)
          * [Configuration Check/Change](#configuration-checkchange)
-         * [Build Functions](#build-functions)
-         * [Deploy functions](#deploy-functions)
+         * [Build &amp; Deploy functions](#build--deploy-functions)
          * [Testing](#testing)
+
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -110,16 +110,11 @@ kafka:
 
   - PRODUCER_MSG_PER_SECOND - is set to 300 and is number of Kafka messages that producer produces every second.
 
-### Build Functions
-
-The two java functions need to be built locally from directories `01_iot_data_producer` and `02_iot_data_consumer`. Without installing JDK locally, we will build them inside a docker container with following command:
-
-```
- $ docker run -it --rm --name my-men-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn clean install
-```
 
 
-### Deploy functions
+### Build & Deploy functions
+
+The functions are built inside the cluster after the `fission spec apply` command.
 
 - All the environment, package and function definitions are in specs directory. To create all of them run command:
 
