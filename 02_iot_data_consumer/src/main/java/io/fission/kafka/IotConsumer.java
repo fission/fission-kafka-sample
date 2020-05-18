@@ -1,5 +1,7 @@
 package io.fission.kafka;
 
+import java.lang.Thread;
+import java.lang.Integer;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -19,11 +21,17 @@ public class IotConsumer implements Function {
 
 	private static Logger logger = Logger.getGlobal();
 
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_ADDR"));
 	final ObjectMapper mapper = new ObjectMapper();
 
 	public ResponseEntity call(RequestEntity req, Context context) {
 		HashMap data = (HashMap) req.getBody();
+		int sleepDelay = Integer.parseInt(System.getenv("CONSUMER_SLEEP_DELAY"));
+		try {
+			Thread.sleep(sleepDelay);
+		} catch(Exception exception) {
+			logger.info("Exception in thread sleep" + exception);
+		}
 		logger.info("Data=" + data.toString());
 		IoTData iotData = mapper.convertValue(data, IoTData.class);
 		Jedis jedis = null;

@@ -21,7 +21,7 @@ public class IotApiSpeed implements Function  {
 	
 	private static Logger logger = Logger.getGlobal();
 	final ObjectMapper mapper = new ObjectMapper();
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_ADDR"));
 
 
 	public ResponseEntity call(RequestEntity req, Context context) {
@@ -30,9 +30,9 @@ public class IotApiSpeed implements Function  {
 		String data = "";
 		try {
 			jedis = pool.getResource();
-			List<String> route82 =  jedis.lrange("ROUTE-82-SPEED", 0, 9999);
-			List<String> route37 =  jedis.lrange("ROUTE-37-SPEED", 0, 9999);
-			List<String> route43 =  jedis.lrange("ROUTE-43-SPEED", 0, 9999);
+			List<String> route82 =  jedis.lrange("ROUTE-82-SPEED", 0, 1999);
+			List<String> route37 =  jedis.lrange("ROUTE-37-SPEED", 0, 1999);
+			List<String> route43 =  jedis.lrange("ROUTE-43-SPEED", 0, 1999);
 			
 			averageFuel.put("ROUTE-82", IotApiFuel.calculateAverage(route82));
 			averageFuel.put("ROUTE-37", IotApiFuel.calculateAverage(route37));

@@ -19,7 +19,7 @@ spec:
   package:
     functionName: io.fission.api.IotApiVehicles
     packageref:
-      name: iot-kafka-consumer-1-0-0-jar-with-dependencies-jar-ywpb
+      name: kc-82d23844-8986-49be-89dc-ac2f44274637
       namespace: default
   resources: {}
   secrets: null

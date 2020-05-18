@@ -2,24 +2,31 @@ apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: kc 
+  name: kc
   namespace: default
 spec:
   InvokeStrategy:
     ExecutionStrategy:
       ExecutorType: newdeploy
-      MaxScale: 2
+      MaxScale: 10
       MinScale: 1
-      TargetCPUPercent: 80
+      SpecializationTimeout: 120
+      TargetCPUPercent: 70
     StrategyType: execution
   configmaps: null
   environment:
     name: java
     namespace: default
+  functionTimeout: 60
+  idletimeout: 120
   package:
     functionName: io.fission.kafka.IotConsumer
     packageref:
-      name: iot-kafka-consumer-1-0-0-jar-with-dependencies-jar-ywpb
+      name: kc-82d23844-8986-49be-89dc-ac2f44274637
       namespace: default
-  resources: {}
+  resources:
+    limits:
+      cpu: 200m
+    requests:
+      cpu: 100m
   secrets: null

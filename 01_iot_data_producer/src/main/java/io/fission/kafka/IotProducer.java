@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.text.DateFormat;
+import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -88,8 +89,10 @@ public class IotProducer implements Function {
 		Random rand = new Random();
 		logger.info("Sending events");
 		// generate event in loop
+		String msgPerSecond = System.getenv("PRODUCER_MSG_PER_SECOND");
+		int msgRate = Integer.parseInt(msgPerSecond);
 		List<IoTData> eventList = new ArrayList<IoTData>();
-		for (int i = 0; i < 50; i++) {// create 1000 vehicles and push to Kafka on every function invocation
+		for (int i = 0; i < msgRate; i++) {// create 1000 vehicles and push to Kafka on every function invocation
 			String vehicleId = UUID.randomUUID().toString();
 			String vehicleType = vehicleTypeList.get(rand.nextInt(5));
 			String routeId = routeList.get(rand.nextInt(3));
@@ -111,7 +114,7 @@ public class IotProducer implements Function {
 				eventList.add(event);
 			}
 		}
-		JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+		JedisPool pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_ADDR"));
 		Jedis jedis = null;
 		Collections.shuffle(eventList);// shuffle for random events
 		try {

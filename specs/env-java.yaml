@@ -21,6 +21,12 @@ spec:
           value: "my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092,"
         - name: TOPIC_NAME 
           value: iotdata
+        - name: CONSUMER_SLEEP_DELAY
+          value: 300
+        - name: PRODUCER_MSG_PER_SECOND
+          value: 300
+        - name: REDIS_ADDR
+          value: "redis-single-master.redis"
     loadendpointpath: ""
     loadendpointport: 0
   version: 2

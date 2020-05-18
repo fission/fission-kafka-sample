@@ -1,24 +1,25 @@
 include:
-- 02_iot_data_consumer/target/iot-kafka-consumer-1.0.0-jar-with-dependencies.jar
+  - "02_iot_data_consumer/*"
 kind: ArchiveUploadSpec
-name: iot-kafka-consumer-1-0-0-jar-with-dependencies-jar
-
+name: iot-data-consumer-wKfD
+  
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: iot-kafka-consumer-1-0-0-jar-with-dependencies-jar-ywpb
+  name: kc-82d23844-8986-49be-89dc-ac2f44274637
   namespace: default
 spec:
   deployment:
     checksum: {}
-    type: url
-    url: archive://iot-kafka-consumer-1-0-0-jar-with-dependencies-jar
   environment:
     name: java
     namespace: default
   source:
     checksum: {}
+    type: url
+    url: archive://iot-data-consumer-wKfD
 status:
-  buildstatus: none
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-15T10:32:20Z"  
