@@ -21,7 +21,7 @@ public class IotApiFuel implements Function  {
 	
 	private static Logger logger = Logger.getGlobal();
 	final ObjectMapper mapper = new ObjectMapper();
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_ADDR"));
 
 	public ResponseEntity call(RequestEntity req, Context context) {
 		Jedis jedis = null;

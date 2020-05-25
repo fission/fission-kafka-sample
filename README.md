@@ -11,9 +11,9 @@ Table of Contents
          * [Setup Kafka](#setup-kafka)
          * [Setup Redis](#setup-redis)
          * [Configuration Check/Change](#configuration-checkchange)
-         * [Build Functions](#build-functions)
-         * [Deploy functions](#deploy-functions)
+         * [Build &amp; Deploy functions](#build--deploy-functions)
          * [Testing](#testing)
+
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -87,13 +87,6 @@ $ helm install redis-single --namespace redis \
 
 Some key configuration need to be checked for having proper values:
 
-- In specs/env-java.yaml check KAFKA_ADDR is pointing to appropriate address of Kafka cluster created in earlier section
-
-- Right now the address of Redis is hardcoded in source code in the `02_iot_data_consumer` folder at seven places. Ensure the address is correct redis URL and correct if not right.
-
-```
-JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
-```
 
 - You will also need to update the Fission installation if not already to enable the Kafka MQT trigger with appropriate configuration of broker address etc.
 
@@ -107,18 +100,21 @@ kafka:
   authentication:
 ```
 
+- In specs/env-java.yaml check 
+
+  - KAFKA_ADDR is pointing to appropriate address of Kafka cluster created in earlier section (Current default to my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092)
+
+  - REDIS_ADDR is pointing to correct Redis address within cluster (Default "redis-single-master.redis")
+
+  - CONSUMER_SLEEP_DELAY - is right now set to 300 second. This is delay which consumer function introduces before consuming a message.
+
+  - PRODUCER_MSG_PER_SECOND - is set to 300 and is number of Kafka messages that producer produces every second.
 
 
-### Build Functions
 
-The two java functions need to be built locally from directories `01_iot_data_producer` and `02_iot_data_consumer`. Without installing JDK locally, we will build them inside a docker container with following command:
+### Build & Deploy functions
 
-```
- $ docker run -it --rm --name my-men-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn clean install
-```
-
-
-### Deploy functions
+The functions are built inside the cluster after the `fission spec apply` command.
 
 - All the environment, package and function definitions are in specs directory. To create all of them run command:
 

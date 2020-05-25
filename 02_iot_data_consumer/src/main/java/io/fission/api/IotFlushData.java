@@ -15,7 +15,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class IotFlushData implements Function  {
 	
 	private static Logger logger = Logger.getGlobal();
-	JedisPool pool = new JedisPool(new JedisPoolConfig(), "redis-single-master.redis");
+	JedisPool pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_ADDR"));
 
 
 	public ResponseEntity call(RequestEntity req, Context context) {
