@@ -79,9 +79,11 @@ $ helm install redis-single --namespace redis \
   --set usePassword=false \
   --set cluster.enabled=false \
   --set master.persistence.enabled=false \
+  --set master.disableCommands={"FLUSHALL"} \
     bitnami/redis
 ```
 
+**Note**: The parameter `--set master.disableCommands={"FLUSHALL"}` enables the [FLUSHDB](https://redis.io/commands/flushdb) command in Redis, which allows to delete everything in a database. This is needed for the `Flush Redis Data` action in this example, but should be used carefully. To disbale the FLUSHDB command, just remove the line `--set master.disableCommands={"FLUSHALL"} \`
 
 ### Configuration Check/Change
 
