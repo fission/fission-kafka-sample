@@ -1,0 +1,25 @@
+include:
+  - "01_iot_data_producer/*"
+kind: ArchiveUploadSpec
+name: iot-data-producer-fQVB
+  
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: kp-5abfba00-2664-4a27-a9f8-2f69ac20e815
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: java
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://iot-data-producer-fQVB
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-15T10:26:17Z"
