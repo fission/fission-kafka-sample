@@ -1,0 +1,25 @@
+include:
+  - "02_iot_data_consumer/*"
+kind: ArchiveUploadSpec
+name: iot-data-consumer-wKfD
+  
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: kc-82d23844-8986-49be-89dc-ac2f44274637
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: java
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://iot-data-consumer-wKfD
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-15T10:32:20Z"  

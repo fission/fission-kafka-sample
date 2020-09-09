@@ -1,0 +1,32 @@
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: kp
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 10
+      MinScale: 1
+      SpecializationTimeout: 120
+      TargetCPUPercent: 70
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: java
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: io.fission.kafka.IotProducer
+    packageref:
+      name: kp-5abfba00-2664-4a27-a9f8-2f69ac20e815
+      namespace: default
+  resources:
+    limits:
+      cpu: 200m
+    requests:
+      cpu: 100m
+  secrets: null
